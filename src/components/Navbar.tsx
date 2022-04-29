@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
             <div className="flex flex-shrik md:w-1/3 justify-center md:justify-start text white mt-3">
               <a href="/" aria-label="Home">
                 <span className="text-xl pl-2 text-white">
-                  <EthLogo className=" pl-4 inline w-10 h-10 fill-white" />
+                  <EthLogo className=" pl-4 pb-2 inline w-10 h-10 fill-white" />
 
                   <h1 className="inline pl-4 pt-4">NFTFolio</h1>
                 </span>
