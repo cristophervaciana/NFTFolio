@@ -10,6 +10,7 @@ const Main: React.FC<{ walletAddress: string }> = ({ walletAddress }) => {
   //   const [nfts, setNfts] = useState(0);
 
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         //Get the network from the provider installed in the pc
@@ -26,7 +27,7 @@ const Main: React.FC<{ walletAddress: string }> = ({ walletAddress }) => {
       }
     };
     fetchData();
-  });
+  },[walletAddress]);
 
   return (
     <main>

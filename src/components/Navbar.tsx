@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
         );
         setConnectUser(true);
       } else {
-        alert("Please install metamask first");
+        alert("Please install Metamask first");
       }
     } catch (e) {
       console.error(e);
