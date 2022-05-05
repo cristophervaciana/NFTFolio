@@ -2,22 +2,26 @@ import React, { useState } from "react";
 import { ReactComponent as MetamaskLogo } from "../Assets/metamask_logo.svg";
 import { ReactComponent as EthLogo } from "../Assets/ether_logo.svg";
 import Main from "./Main";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const [userWallet, setUserWallet] = useState("null");
   const [connectBtnText, setConnectBtnText] = useState("Connect Wallet");
   const [connectUser, setConnectUser] = useState(false);
 
-  const accountChangeHandler= () =>{
+  const accountChangeHandler = () => {
     setConnectUser(false);
     setConnectBtnText("Connect Wallet");
-  }
+  };
 
-  const closeSession = () =>{
+  const closeSession = () => {
     accountChangeHandler();
-    (window as any).ethereum.removeListener('accountsChanged', accountChangeHandler);
-   // (window as any).location.reload();
-  }
+    (window as any).ethereum.removeListener(
+      "accountsChanged",
+      accountChangeHandler
+    );
+    // (window as any).location.reload();
+  };
   const connectWallet = async () => {
     try {
       if ((window as any).ethereum && (window as any).ethereum.isMetaMask) {
@@ -39,10 +43,9 @@ const Navbar: React.FC = () => {
     }
   };
 
-  if(connectUser){
-    (window as any).ethereum.on("accountsChanged",accountChangeHandler);
+  if (connectUser) {
+    (window as any).ethereum.on("accountsChanged", accountChangeHandler);
   }
-
 
   return (
     <>
@@ -82,21 +85,26 @@ const Navbar: React.FC = () => {
               <ul className="list-reset flex justify-between flex-1 md:flex-none items-center">
                 <li className="flex-1 md:flex-none md:mr-3">
                   <div className="relative inline-block">
-                    <button
-                      onClick={connectWallet}
-                      className="drop-button text-white py-1 px-2 border-2 border-gray-500 rounded-xl"
-                    >
-                      {" "}
-                      {connectBtnText}{" "}
-                      <MetamaskLogo className="h-8 w-8 inline py-2" />
-                    </button>
+                    <Link to="/overview">
+                      <button
+                        onClick={connectWallet}
+                        className="drop-button text-white py-1 px-2 border-2 border-gray-500 rounded-xl"
+                      >
+                        {" "}
+                        {connectBtnText}{" "}
+                        <MetamaskLogo className="h-8 w-8 inline py-2" />
+                      </button>
+                    </Link>
                   </div>
                 </li>
 
                 {connectUser ? (
                   <li className="flex-1 md:flex-none md:mr-3">
                     <div className="relative inline-block">
-                      <button  className="drop-button text-white py-1 px-2 border-2 border-gray-500 rounded-xl" onClick={closeSession}>
+                      <button
+                        className="drop-button text-white py-1 px-2 border-2 border-gray-500 rounded-xl"
+                        onClick={closeSession}
+                      >
                         <svg
                           className="h-8 w-8 inline py-2 fill-white"
                           xmlns="http://www.w3.org/2000/svg"

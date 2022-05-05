@@ -3,10 +3,14 @@ import './App.css';
 //import Main from './components/Main';
 import Navbar from './components/Navbar';
 
+import { BrowserRouter } from "react-router-dom";
+
 const App:React.FC = () => {
   return (
     <>
-      <Navbar/>
+    <BrowserRouter>
+    <Navbar/>
+    </BrowserRouter>
 
     </>
   );
