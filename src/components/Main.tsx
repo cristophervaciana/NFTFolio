@@ -1,45 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import { ethers } from "ethers";
 import Overview from "./Overview";
 import Collections from "./Collections";
 import History from "./History";
+import { ethers } from "ethers";
+
+
 const Main: React.FC<{ walletAddress: string }> = ({ walletAddress }) => {
   const [balance, setBalance] = useState("");
   const [transactions, setTransactions] = useState<Array<any>>([]);
-  const API_KEY = "7N3RERZUH87SM2KX7Y15GVID9QQWPJVVQW";
-  const network = "homestead";
-  //   const [faildTxs, setFailedTxs] = useState(0);
-  //   const [approvedTxs, setApprovedTxs] = useState(0);
-  //   const [collections, setCollections] = useState(0);
-  //   const [nfts, setNfts] = useState(0);
+  // const API_KEY = "7N3RERZUH87SM2KX7Y15GVID9QQWPJVVQW";
+  // const network = "homestead";
+  
 
+  
   useEffect(() => {
-    const fetchData = async () => {
+
+    const getBalance = async () => {
       try {
-        //Get the network from the provider for the consult
-        const provider = new ethers.providers.Web3Provider(
-          (window as any).ethereum
-        );
 
-        //Request the balance in the wallet
-        const balance = await provider.getBalance(walletAddress);
-        const balanceInEth = ethers.utils.formatEther(balance);
-        setBalance(balanceInEth);
-
-        //Provider for the Etherscan API
-        let etherscanProvider = new ethers.providers.EtherscanProvider(
-          network,
-          API_KEY
-        );
-
-        const etherscan_txs = await etherscanProvider.getHistory(walletAddress);
-        setTransactions(etherscan_txs);
+        //Fetch to get the balance from the server
+        fetch(`/wallet/balance/${walletAddress}`).then(
+          response => response.json()
+        ).then(
+          data =>{
+            setBalance(ethers.utils.formatEther(data.message));
+          }
+        )
+        
       } catch (e) {
         console.error(e);
       }
     };
-    fetchData();
+    getBalance();
   }, [walletAddress]);
 
   return (
@@ -85,7 +78,7 @@ const Main: React.FC<{ walletAddress: string }> = ({ walletAddress }) => {
 
         <section>
           <Routes>
-            <Route path="/overview" element={<Overview balance={balance} />} />
+            <Route path="/overview" element={<Overview balance={balance} transactions={transactions}/>} />
             <Route
               path="/collections"
               element={<Collections transactions={transactions} />}
